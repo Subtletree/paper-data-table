@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 # Paper-data-table [![Build Status](https://travis-ci.org/ibarrick/paper-data-table.svg?branch=master)](https://travis-ci.org/ibarrick/paper-data-table)
 
 
@@ -72,3 +73,43 @@ Port of https://github.com/daniel-nagy/md-data-table using ember-paper
   onIncrementPage=(action 'incrementPage')
   onDecrementPage=(action 'decrementPage')}}
 ```
+=======
+paper-data-table
+==============================================================================
+
+[Short description of the addon.]
+
+
+Compatibility
+------------------------------------------------------------------------------
+
+* Ember.js v3.12 or above
+* Ember CLI v2.13 or above
+* Node.js v10 or above
+
+
+Installation
+------------------------------------------------------------------------------
+
+```
+ember install paper-data-table
+```
+
+
+Usage
+------------------------------------------------------------------------------
+
+[Longer description of how to use the addon in apps.]
+
+
+Contributing
+------------------------------------------------------------------------------
+
+See the [Contributing](CONTRIBUTING.md) guide for details.
+
+
+License
+------------------------------------------------------------------------------
+
+This project is licensed under the [MIT License](LICENSE.md).
+>>>>>>> 0071a7f... v3.2.0...v3.16.2
