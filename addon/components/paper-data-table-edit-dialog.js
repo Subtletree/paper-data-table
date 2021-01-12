@@ -6,7 +6,7 @@ export default Component.extend({
 	tagName: '',
 	actions: {
 		outsideClicked() {
-			this.get('onClose')();
+			this.onClose();
 		}
 	}
 });

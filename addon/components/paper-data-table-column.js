@@ -19,7 +19,7 @@ export default Component.extend({
 	sortDir: null,
 
 	style: computed('width', function() {
-		let width = escapeExpression(this.get('width'));
+		let width = escapeExpression(this.width);
 		if (width) {
 			return htmlSafe(`width: ${width}px;`);
 		}
@@ -27,14 +27,14 @@ export default Component.extend({
 	}),
 
 	active: computed('sortProp', 'currentProp', function() {
-		return this.get('sortProp') && this.get('sortProp') === this.get('currentProp');
+		return this.sortProp && this.sortProp === this.currentProp;
 	}).readOnly(),
 
 	click() {
 		let {
 			sortProp,
 			sortDir,
-			active } = this.getProperties('sortProp', 'sortDir', 'active');
+			active } = this;
 
 		if (!sortProp) {
 			return;
@@ -47,7 +47,7 @@ export default Component.extend({
 			newSortDir = sortDir === 'asc' ? 'desc': 'asc';
 		}
 
-		this.get('sortChanged')(sortProp, newSortDir);
+		this.sortChanged(sortProp, newSortDir);
 		this.set('sortDir', newSortDir);
 	},
 });

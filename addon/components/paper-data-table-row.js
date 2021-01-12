@@ -10,22 +10,22 @@ export default Component.extend({
 	showEdit: false,
 	attributeBindings: ['style', 'disabled'],
 	style: computed('edit', 'onClick', function() {
-		if (this.get('onClick') || this.get('edit')) {
+		if (this.onClick || this.edit) {
 			return htmlSafe('cursor: pointer;');
 		}
 		return htmlSafe('');
 	}),
 
 	click() {
-		if (this.get('onClick')) { this.get('onClick')() }
-		if (this.get('edit')) {
+		if (this.onClick) { this.onClick() }
+		if (this.edit) {
 			this.set('showEdit',true);
 		}
 	},
 
 	actions: {
 		close() {
-			if (this.get('onClose')) { this.get('onClose')(this) }
+			if (this.onClose) { this.onClose(this) }
 		},
 		toggleEdit() {
 			this.toggleProperty('showEdit');

@@ -22,8 +22,8 @@ export default Component.extend({
 
 	actions: {
 		sortChanged(sortProp, sortDir) {
-			if (this.get('onChangeSort')) {
-				this.get('onChangeSort')({ sortProp, sortDir });
+			if (this.onChangeSort) {
+				this.onChangeSort({ sortProp, sortDir });
 			} else {
 				this.setProperties({ sortProp, sortDir });
 			}

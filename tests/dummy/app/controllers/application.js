@@ -18,7 +18,7 @@ export default Controller.extend({
 	pages: A([1,2]),
 	page: 1,
   totals: computed('desserts.[]', function() {
-    let desserts = this.get('desserts');
+    let desserts = this.desserts;
     let sumBy = (desserts, prop) => Math.round(desserts.reduce((sum, row) => sum + row[prop], 0));
     return [
       sumBy(desserts, 'calories'),
@@ -29,20 +29,20 @@ export default Controller.extend({
     ];
   }),
 	paginatedDesserts: computed('page','limit',function () {
-		let ind = (this.get('page') - 1) * this.get('limit');
+		let ind = (this.page - 1) * this.limit;
 
-		return A(this.get('desserts').toArray().splice(ind,this.get('limit')));
+		return A(this.desserts.toArray().splice(ind,this.limit));
 	}),
 	actions: {
 		decrementPage() {
-			let page = this.get('page');
+			let page = this.page;
 			if (page > 0) {
 				this.set('page',page-1);
 			}
 		},
 		incrementPage() {
-			let page =  this.get('page');
-			let max = this.get('pages').reduce((prev,curr) => curr > prev ? curr : prev,0);
+			let page =  this.page;
+			let max = this.pages.reduce((prev,curr) => curr > prev ? curr : prev,0);
 			if (page < max) {
 				this.set('page',page+1);
 			}

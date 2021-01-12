@@ -17,16 +17,16 @@ export default Component.extend({
 	transitionClass: 'ng',
 	classNames: ['md-whiteframe-1dp'],
 	style: computed('left','top','width',function() {
-		let left = escapeExpression(this.get('left'));
-		let top = escapeExpression(this.get('top'));
-		let width = escapeExpression(this.get('width'));
+		let left = escapeExpression(this.left);
+		let top = escapeExpression(this.top);
+		let width = escapeExpression(this.width);
 		return htmlSafe(`left: ${left}px;top: ${top}px; min-width: ${width}px;`);
 	}),
 
 	positionDialog() {
-		let element = this.get('element') || { clientWidth: 0, clientHeight: 0};
+		let element = this.element || { clientWidth: 0, clientHeight: 0};
 		let size = { width: element.clientWidth, height: element.clientHeight };
-		let cellBounds = document.querySelector(`#${this.get('parent')}`).getBoundingClientRect();
+		let cellBounds = document.querySelector(`#${this.parent}`).getBoundingClientRect();
 		let tableBounds = this._mdTableContainer.getBoundingClientRect();
 
 		if (size.width > tableBounds.right - cellBounds.left) {
@@ -40,23 +40,25 @@ export default Component.extend({
 		} else {
 			this.set('top',cellBounds.top + 1);
 		}
-		this.set('width',(this.get('row') ? tableBounds.width : cellBounds.width));
+		this.set('width',(this.row ? tableBounds.width : cellBounds.width));
 	},
+
+  initialPositioning() {
+    if (!this.isDestroying || !this.isDestroyed) {
+      this.positionDialog();
+      const input = this.element.querySelector('input');
+      if (input) {
+        input.focus();
+      }
+    }
+  },
 
 	didInsertElement() {
 		this._super(...arguments);
 		this._mdTableContainer = this.element.closest('md-table-container');
 		this._positionDialog = this.positionDialog.bind(this);
 		window.addEventListener('resize', this._positionDialog);
-		run.scheduleOnce('afterRender', this, function() {
-		  if (!this.isDestroying || !this.isDestroyed) {
-        this.positionDialog();
-        const input = this.element.querySelector('input');
-        if (input) {
-          input.focus();
-        }
-      }
-		});
+		run.scheduleOnce('afterRender', this, this.initialPositioning);
 	},
 
 	willDestroyElement() {

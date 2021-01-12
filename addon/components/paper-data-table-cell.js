@@ -18,7 +18,7 @@ export default Component.extend({
 	showEdit: false,
 	width: null,
 	style: computed('width', function() {
-		let width = escapeExpression(this.get('width'));
+		let width = escapeExpression(this.width);
 		if (width) {
 			return htmlSafe(`width: ${width}px;`);
 		} else {
@@ -26,12 +26,12 @@ export default Component.extend({
 		}
 	}),
 	click() {
-    if (this.get('onClick')) { this.get('onClick')() }
+    if (this.onClick) { this.onClick() }
 		this.set('showEdit',true);
 	},
 	actions: {
 		close() {
-      if (this.get('onClose')) { this.get('onClose')(this) }
+      if (this.onClose) { this.onClose(this) }
 		},
 		toggleEdit() {
 			this.toggleProperty('showEdit');

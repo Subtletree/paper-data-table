@@ -13,7 +13,7 @@
 	</tr>
 </thead>
 {{#if headersWormhole}}
-	{{#ember-wormhole destinationElement=headersWormhole}}
+	<EmberWormhole @destinationElement={{headersWormhole}}>
 	<tr id="hidden-row" style="visibility: hidden;">
 		{{yield (hash
 			column=(component 'paper-data-table-column'
@@ -23,5 +23,5 @@
 			)
 		)}}
 	</tr>
-	{{/ember-wormhole}}
+	</EmberWormhole>
 {{/if}}
