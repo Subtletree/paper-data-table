@@ -1,90 +1,36 @@
-<PaperSelectMenu @horizontalPosition={{readonly horizontalPosition}} @initiallyOpened={{readonly initiallyOpened}} @matchTriggerWidth={{readonly matchTriggerWidth}} @onClose={{action "onClose"}} @onOpen={{action "onOpen"}} @registerAPI={{action "registerAPI"}} @renderInPlace={{readonly renderInPlace}} @verticalPosition={{readonly verticalPosition}} @disabled={{readonly disabled}} @searchEnabled={{searchEnabled}} as |menu|>
+<md-input-container class="paper-table-select {{@class}} {{if @selected "md-input-has-value"}} {{if this.isInvalidAndTouched "md-input-invalid"}} {{if this.isFocusedAndSelected "md-input-focused"}}" ...attributes>
 
-  {{#if shouldShowLabel}}
-    <label for={{concat "ember-basic-dropdown-trigger-" publicAPI.uniqueId}} class="{{if required "md-required"}}">{{label}}</label>
-  {{/if}}
+  <PowerSelect
+    @selected={{@selected}}
+    @options={{@options}}
+    @onChange={{@onChange}}
+    @disabled={{@disabled}}
+    @placeholder={{@placeholder}}
+    @search={{@search}}
+    @searchEnabled={{@searchEnabled}}
+    @searchField={{@searchField}}
+    @searchPlaceholder={{@searchPlaceholder}}
+    @registerAPI={{action (mut this.publicAPI)}}
+    @animationEnabled={{false}}
 
-  <menu.trigger @ariaDescribedBy={{readonly ariaDescribedBy}} @ariaInvalid={{readonly ariaInvalid}} @ariaLabel={{readonly ariaLabel}} @ariaLabelledBy={{readonly ariaLabelledBy}} @ariaRequired={{readonly required}} @class={{readonly (concat "md-table-select " concatenatedTriggerClasses)}} @onKeydown={{action "onTriggerKeydown"}} @onFocus={{action "onTriggerFocus"}} @onBlur={{action "deactivate"}} @tabindex={{readonly tabindex}} @required={{readonly required}}>
-    {{#component triggerComponent
-      allowClear=(readonly allowClear)
-      buildSelection=(readonly buildSelection)
-      extra=(readonly extra)
-      listboxId=(readonly optionsId)
-      onFocus=(action "onFocus")
-      activate=(action "activate")
-      onBlur=(action "deactivate")
-      onInput=(action "onInput")
-      placeholder=(readonly placeholder)
-      label=(readonly label)
-      onKeydown=(action "onKeydown")
-      searchEnabled=(readonly searchEnabled)
-      searchField=(readonly searchField)
-      select=(readonly publicAPI)
-      selectedItemComponent=(readonly selectedItemComponent)
-      as |opt term|}}
-      {{yield opt term}}
-    {{/component}}
-  </menu.trigger>
+    @verticalPosition="above"
+    @calculatePosition={{this.calculatePosition}}
+    @extra={{hash label=@label}}
+    @_ebdTriggerComponent={{component "paper-select/ebd-trigger" label=@label selected=@selected required=@required disabled=@disabled}}
+    @triggerComponent="paper-select/eps-trigger"
+    @triggerClass="md-table-select {{if this.isInvalid "ng-invalid"}} {{if this.isTouched "ng-dirty"}}"
 
-  {{#unless hideAllMessages}}
-    <div class="md-errors-spacer">
-      {{#if maxlength}}
-        <div class="md-char-counter">{{renderCharCount}}</div>
-      {{/if}}
-    </div>
-    {{#if isInvalidAndTouched}}
-      <div class="md-input-messages-animation md-auto-hide" ng-messages>
-        {{#each validationErrorMessages as |error index|}}
-          <div id="error-{{inputElementId}}-{{index}}"
-          class="paper-input-error ng-enter ng-enter-active" ng-message>
-            {{error.message}}
-          </div>
-        {{/each}}
-      </div>
-    {{/if}}
-  {{/unless}}
+    @_ebdContentComponent={{component "paper-select/ebd-content" searchEnabled=@searchEnabled select=this.publicAPI}}
+    @optionsComponent="paper-select/options"
+    @beforeOptionsComponent="paper-select/search"
+    @noMatchesMessageComponent="paper-select/no-matches-message"
+    @searchMessageComponent="paper-select/search-message"
+    @onClose={{this.close}}
+    @onOpen={{this.open}}
+    @onFocus={{this.focus}}
+    @onBlur={{this.blur}}
+    as |opt term|>
+    {{yield opt term}}
+  </PowerSelect>
 
-  <menu.content @class={{readonly concatenatedDropdownClasses}} @to={{readonly destination}} @searchEnabled={{searchEnabled}} @dropdown={{publicAPI}} as |content|>
-    {{component beforeOptionsComponent
-      extra=(readonly extra)
-      listboxId=(readonly optionsId)
-      onInput=(action "onInput")
-      onKeydown=(action "onKeydown")
-      searchEnabled=(readonly searchEnabled)
-      onFocus=(action "onFocus")
-      onBlur=(action "deactivate")
-      searchPlaceholder=(readonly searchPlaceholder)
-      select=(readonly publicAPI)}}
-    {{#if mustShowSearchMessage}}
-      {{component searchMessageComponent
-        searchMessage=(readonly searchMessage)
-        select=(readonly publicAPI)
-      }}
-    {{else if mustShowNoMessages}}
-      {{#if (hasBlock "inverse")}}
-        {{yield to="inverse"}}
-      {{else if noMatchesMessage}}
-        <md-content class="ember-power-select-options" role="listbox">
-          <md-option class="ember-power-select-option ember-power-select-option--no-matches-message" role="option">
-            {{noMatchesMessage}}
-          </md-option>
-        </md-content>
-      {{/if}}
-    {{else}}
-      {{#component optionsComponent
-        class="ember-power-select-options"
-        groupIndex=""
-        loadingMessage=(readonly loadingMessage)
-        id=(readonly optionsId)
-        options=(readonly publicAPI.results)
-        searchEnabled=(readonly searchEnabled)
-        optionsComponent=(readonly optionsComponent)
-        select=(readonly publicAPI)
-        menuParent=content.menu
-        as |option term|}}
-        {{yield option term}}
-      {{/component}}
-    {{/if}}
-    {{component afterOptionsComponent select=(readonly publicAPI) extra=(readonly extra)}}
-  </menu.content>
-</PaperSelectMenu>
+</md-input-container>

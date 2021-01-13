@@ -1,10 +1,10 @@
 {{#if onChangePage}}
-<div class="page-select">
-	<div class="md-table-label">Page:</div>
-	<PaperTableSelect @options={{pages}} @selected={{page}} @onChange={{onChangePage}} as |pageNumber|>
-		{{pageNumber}}
-	</PaperTableSelect>
-</div>
+	<div class="page-select">
+		<div class="md-table-label">Page:</div>
+		<PaperTableSelect @options={{pages}} @selected={{page}} @onChange={{onChangePage}} as |pageNumber|>
+			{{pageNumber}}
+		</PaperTableSelect>
+	</div>
 {{/if}}
 <div class="limit-select">
 	<div class="md-table-label">Rows per page:</div>

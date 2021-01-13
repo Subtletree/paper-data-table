@@ -1,8 +1,7 @@
-import layout from '../templates/components/paper-table-select';
-import PaperSelect from 'ember-paper/components/paper-select';
+import template from '../templates/components/paper-table-select';
+import PaperSelect from 'ember-paper/components/paper-select/component';
+import { tagName, layout } from '@ember-decorators/component';
 
-export default PaperSelect.extend({
-  layout,
-  tagName: 'div',
-  classNames: ['page-select']
-});
+@tagName('')
+@layout(template)
+export default class PaperTableSelect extends PaperSelect {}
